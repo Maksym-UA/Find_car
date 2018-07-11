@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		{% block head %}
+		<meta charset="utf-8"/>
+		<meta name="description" content="Find your dream car">
+		<meta itemprop="name" content="Find your dream car site">
+		<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="mobile-web-app-capable" content="yes">
+
+		<title>{% block title %}{% endblock %} Find your dream car</title>
+		
+		<!--<base target="_blank">-->
+		
+		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<link rel="stylesheet" href="{{ url_for('static',filename='styles/style.css') }}">
+		<!-- <link rel="stylesheet" media="(max-width:600px)" href="weather-2-small.css">
+		<link rel="stylesheet" media="(min-width:601px)" href="weather-2-large.css"> -->
+		<link rel="stylesheet" media="screen and (max-width:768px)" href="{{ url_for('static', filename='styles/responsive.css') }}">
+		{% endblock %}
+	</head>
+	
+	<!--
+	<picture> 
+			<source media="(min-width: 500px)" src="images_src/small/still_life1.jpg 500w">
+			<source media="(min-width: 800px)" src="images_src/still_life.jpg 800w">
+			<img class="photo" src="images_src/still_life.jpg" alt="An awesome picture" style="display:block; margin-right: auto; margin-left: auto;">
+
+		</picture>
+		
+		
+		The pattern attribute specifies a regular expression used to validate an input field. For example, to validate a US Zip code (5 digits, sometimes followed by a dash and an additional 4 digits), we would set the pattern like this:
+		<input type="text" pattern="^\d{5,6}(?:[-\s]\d{4})?$" ...>
+	-->
+	
+	
+	<body>
+		<div class="container">
+			<header>
+				<h2>Find your new car</h2>
+				
+			</header>
+			
+			<!--<div class = "col-xs-12 col-sm-12 col-md-12 main">-->
+			
+			<div class = "main">
+							
+				<section class="content">
+					{% for error in get_flashed_messages() %}
+						<div class="error">{{ error }}</div>
+					{% endfor %}
+				</section>
+				
+				
+				<form id="form1" method="post">
+					<fieldset>
+						<legend>Price range:</legend>
+						Start:<br>
+						<input type="number" name="range_start" min="0" value="{{ range_start }}" required autofocus>
+						<br>
+						End:<br>
+						<input type="number" name="range_end" min="0"  value="{{ range_end }}" required>
+						<br><br>
+					</fieldset>	
+					
+					<fieldset>
+						<legend>Fuel type:</legend>
+						{% for fuel_type in fuel %}
+							<input type="checkbox" name="fuel_type" value="{{ fuel_type }}"> {{ fuel_type }}<br>
+						{% endfor %}
+						<br>
+					</fieldset>
+					
+					<fieldset>
+						<legend>Transmission:</legend>	
+						{% for transmission in transmissions %}
+							<input type="checkbox" name="transmission" value="{{ transmission }}"/> {{ transmission }}<br>
+						{% endfor %}
+						
+						<br>
+					</fieldset>
+
+					<fieldset>
+						<legend>Brands:</legend>	
+						<input list="brands" name="brand"><br>
+						<datalist id="brands">
+							{% for brand in brands %}
+								<option value="{{ brand }}">
+							{% endfor %}
+						</datalist>
+					</fieldset>							
+					<br>
+					E-mail to receive results (optional):<br>
+					<input type="email" name="email" value="{{ email }}" autocomplete="email">
+					<br>
+					<br>
+					<input id="search_btn" type="submit" value="Search">
+					<input id="reset_btn" type="reset" value="Reset"><br>					
+				</form> 
+				{% block content %}{% endblock %}
+	<!--to send results to user (optional)
+	An input field located outside the HTML form (but still a part of the form):
+	Last name: <input type="text" name="lname" form="form1"-->
+				
+						
+			</div>			
+		</div>
+		
+		<footer>
+			{% block footer %}
+				<a href="http://github.com/Maksym-UA/Compare_cars" title="View source for this page on GitHub" id="viewSource">View source on GitHub</a>
+			{% endblock %}
+		</footer>
+		
+		<noscript>Sorry, your browser does not support JavaScript!</noscript>
+	
+	</body>
+</html>
+

@@ -1,0 +1,3 @@
+graft venv/static
+graft venv/templates
+global-exclude *.pyc
