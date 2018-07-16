@@ -17,10 +17,11 @@ brands = ['Alfa Romeo', 'BMW', 'Citroen', 'Ford']
 @bp.route('/index', methods=['POST', 'GET'])
 def set_parameteres():
     if request.method == 'POST':
+        
         range_start = request.form['range_start']
         range_end = request.form['range_end']
-        fuel_type = request.form['fuel_type']
-        transmission = request.form['transmission']
+        fuel_type = request.form.getlist('fuel_type')
+        transmission = request.form.getlist('transmission')
         brand = request.form['brand']
         error = None
 
@@ -31,12 +32,12 @@ def set_parameteres():
             flash(error)
         else:
             print(range_start)
-            print(transmission)
+            print(fuel_type[0])
             return redirect(
                 url_for(
                     'get_form.search',
                     range_start=range_start, range_end=range_end,
-                    transmission=transmission, brand=brand
+                    transmission=transmission, fuel_type=fuel_type, brand=brand
                     )
                     )
 
